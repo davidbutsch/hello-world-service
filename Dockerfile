@@ -51,7 +51,7 @@ RUN npm run build
 FROM base AS final
 
 # Use production node environment by default.
-ENV NODE_ENV production
+ENV NODE_ENV=production
 
 # Copy package.json so that package manager commands can be used.
 COPY package.json .
@@ -66,4 +66,4 @@ COPY --from=build /usr/src/app/dist ./dist
 EXPOSE 8000
 
 # Run the application.
-CMD npm start
+CMD ["npm", "start"]
