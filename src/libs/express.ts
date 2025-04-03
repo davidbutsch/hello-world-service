@@ -6,28 +6,19 @@ import {
   RouteNotFoundHandler,
 } from "@/middlewares";
 import express, { Express } from "express";
-import { ForbiddenError, useExpressServer } from "routing-controllers";
+import { useExpressServer } from "routing-controllers";
 
 import { ToHttpError } from "@/middlewares/errors/ToHttpError";
 import cors from "cors";
 import helmet from "helmet";
 import { Logger } from ".";
 
+import { HelloWorldController } from "@/modules/hello-world";
+
 const securityMiddleware = (app: Express) => {
   app.enable("trust proxy");
   app.use(helmet());
-  app.use(
-    cors({
-      origin: (origin, callback) => {
-        if (!origin || env.keys.CORS_WHITELIST.indexOf(origin) !== -1) {
-          callback(null, true);
-        } else {
-          callback(new ForbiddenError("Not allowed by CORS"), false);
-        }
-      },
-      credentials: true,
-    })
-  );
+  app.use(cors());
 };
 
 const standardMiddleware = (app: Express) => {
@@ -40,7 +31,7 @@ securityMiddleware(app);
 standardMiddleware(app);
 
 useExpressServer(app, {
-  controllers: [],
+  controllers: [HelloWorldController],
   routePrefix: ROUTE_PREFIX,
   defaultErrorHandler: false,
   validation: defaultValidationConfig,

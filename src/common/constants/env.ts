@@ -3,7 +3,7 @@ import { defaultEnvOptions } from "./defaults";
 
 dotenv.config();
 
-const keys = ["NODE_ENV", "PORT", "CORS_WHITELIST", "LOG_PATH"] as const; // const assert creates readonly "tuple" array
+const keys = ["NODE_ENV", "PORT", "LOG_PATH"] as const; // const assert creates readonly "tuple" array
 type Key = (typeof keys)[number];
 export type EnvKeys = Record<Key, string>;
 
